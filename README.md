@@ -8,4 +8,4 @@
 
 4. Mobile mode styles are broken, please fix this before we release! :(
 
-5. Can we always display selected product at the beginning of the list regardless of selected tag? So user always knows which product he or she has already choosen while he or she continues browsing.
+5. *(OPTIONAL)* Can we always display selected product at the beginning of the list regardless of selected tag? So user always knows which product he or she has already choosen while he or she continues browsing.
