@@ -4,7 +4,7 @@
 
 2. Client-side request to API make the app score bad in context of SEO. Can we change it?
 
-3. Some components re-render unnecessarily and there's some logic run unnecessarily on every render. Optimize the app.
+3. Some components re-render unnecessarily and there's some logic ran unnecessarily on every render. Optimize the app.
 
 4. Mobile mode styles are broken, please fix this before we release! :(
 
