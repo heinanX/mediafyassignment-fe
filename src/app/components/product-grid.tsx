@@ -1,35 +1,38 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { getProducts, GetProductsResponse } from "../api/getProducts";
-import ProductCard from "./product-card";
+import { useCallback, useMemo, useState } from "react";
+import { GetProductsResponse } from "../api/getProducts";
 import TagsMenu from "./tags-menu";
 
-const ProductGrid: React.FC = () => {
-  console.log("ProductGrid rendered");
+import MemoizedProductCard from "./product-card";
 
-  const [data, setData] = useState<GetProductsResponse | null>(null);
+const ProductGrid = ({ productData }: { productData: GetProductsResponse }) => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
-  useEffect(() => {
-    getProducts().then((response) => {
-      setData(response);
+  console.log("productgrid rendererd");
+
+  const tags = useMemo(() => {
+    console.log("setting tags");
+    return [...new Set(productData.data.map((product) => product.tags).flat())];
+  }, [productData]);
+
+  const products = useMemo(() => {
+    console.log("filtering products");
+    return productData.data.filter((product) => {
+      if (!selectedTag) {
+        return true;
+      }
+      return product.tags.includes(selectedTag);
     });
-  }, []);
+  }, [productData, selectedTag]);
 
-  if (!data) {
-    return null;
-  }
-
-  const tags = [...new Set(data.data.map((product) => product.tags).flat())];
-
-  const products = data.data.filter((product) => {
-    if (!selectedTag) {
-      return true;
-    }
-    return product.tags.includes(selectedTag);
-  });
+  const handleSelect = useCallback(
+    (product: GetProductsResponse["data"][0]) => {
+      setSelectedId(product.id);
+    },
+    []
+  );
 
   return (
     <>
@@ -42,11 +45,11 @@ const ProductGrid: React.FC = () => {
       </section>
       <section className="w-fit mx-auto grid grid-cols-3 justify-items-center justify-center gap-14 mt-10 mb-5">
         {products.map((product) => (
-          <ProductCard
+          <MemoizedProductCard
             key={product.id}
             product={product}
             isSelected={product.id === selectedId}
-            onSelect={(product) => setSelectedId(product.id)}
+            onSelect={handleSelect}
           />
         ))}
       </section>
