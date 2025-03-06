@@ -1,6 +1,9 @@
+import { getProductsServerside } from "./api/getProductsServerside";
 import ProductGrid from "./components/product-grid";
 
-export default function Home() {
+export default async function Home() {
+  const products = await getProductsServerside();
+  console.log(products);
   return (
     <div className="container mx-auto p-4">
       <header>
@@ -8,7 +11,7 @@ export default function Home() {
       </header>
       <main>
         <h2 className="text-2xl text-center">Products</h2>
-        <ProductGrid />
+        <ProductGrid productData={products.data} />
       </main>
     </div>
   );
