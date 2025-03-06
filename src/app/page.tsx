@@ -3,7 +3,7 @@ import ProductGrid from "./components/product-grid";
 
 export default async function Home() {
   const products = await getProductsServerside();
-  console.log(products);
+
   return (
     <div className="container mx-auto p-4">
       <header>

@@ -10,8 +10,6 @@ const ProductGrid = ({ productData }: { productData: GetProductsResponse }) => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
-  console.log("productgrid rendererd");
-
   const tags = useMemo(() => {
     console.log("setting tags");
     return [...new Set(productData.data.map((product) => product.tags).flat())];
@@ -43,7 +41,7 @@ const ProductGrid = ({ productData }: { productData: GetProductsResponse }) => {
           selectedTag={selectedTag}
         />
       </section>
-      <section className="w-fit mx-auto grid grid-cols-3 justify-items-center justify-center gap-14 mt-10 mb-5">
+      <section className="w-fit mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center justify-center gap-14 mt-10 mb-5">
         {products.map((product) => (
           <MemoizedProductCard
             key={product.id}
